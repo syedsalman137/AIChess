@@ -1,0 +1,60 @@
+.tile
+{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+}
+
+.white-tile {
+    background-color: #fafa8b;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    /* background-image: repeating-linear-gradient(-10deg, aquamarine, aquamarine 1px, transparent 1px, transparent 6px); */
+}
+
+.black-tile {
+    background-color: #963500;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
+
+.tile .piece {
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px;
+    box-sizing: border-box;
+}
+
+@media  screen and (max-width: 800px) {
+    .tile
+    {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    .tile .piece {
+        width: 5vw;
+        height: 5vw;
+        background-size: 4vw;
+    }
+}
+
+@media  screen and (max-width: 600px) {
+    .tile
+    {
+        width: 11vw;
+        height: 11vw;
+    }
+
+    .tile .piece {
+        width: 11vw;
+        height: 11vw;
+        background-size: 9vw;
+    }
+}

@@ -1,0 +1,141 @@
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 420px;
+    height: 480px;
+    margin-left: 30%;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.game-over {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    color: #fff;
+    display: flex;
+    flex-flow: column;
+    font-size: 20px;
+    justify-content: center;
+    position: absolute;
+    width: 420px;
+    height: 480px;
+}
+
+.redirect-link {
+    color: #fff;
+}
+
+#Arena {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#GameView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70vw;
+    height: 100vh;
+}
+
+#GameConsole {
+    display: flex;
+    width: 27vw;
+    height: 480px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* @media  screen and (max-width: 800px) {
+    #GameView {
+      width: 100vw;
+    }
+    #GameConsole {
+      width: 42vw;
+      height: 22vw;
+    }
+} */
+
+/* @media screen and (max-width: 600px) {
+    #GameConsole {
+      width: 94vw;
+      height: 40vw;
+    }
+} */
+
+/* #board .tile
+{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+}
+
+#board .white-tile {
+    background-color: goldenrod;
+}
+
+#board .black-tile {
+    background-color: red;
+} */
+
+@media  screen and (max-width: 800px) {
+    #board {
+        width: 42vw;
+        height: 48.5vw;
+        margin-left: 0%;
+    }
+
+    .game-over {
+        width: 42vw;
+        height: 48.5vw;
+    }
+    
+    #board .tile
+    {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    #GameView {
+        width: 100vw;
+        height: 55vw;
+    }
+
+    #GameConsole {
+        width: 42vw;
+        height: 22vw;
+    }
+    
+}
+
+@media  screen and (max-width: 600px) {
+    #board {
+        width: 94vw;
+        height: 108vw;
+        margin-left: 0%;
+    }
+    
+    #board .tile
+    {
+        width: 11vw;
+        height: 11vw;
+    }
+
+    .game-over {
+        width: 94vw;
+        height: 108vw;
+    }
+
+    #GameView {
+        width: 100vw;
+        height: 80vh;
+    }
+
+    #GameConsole {
+        width: 94vw;
+        height: 40vw;
+    }
+}
