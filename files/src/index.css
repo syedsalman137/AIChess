@@ -8,7 +8,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to right bottom, #00e9ff, #00d1e6, #00b9ce, #01a2b6, #028c9e, #00798e, #00677d, #00556c, #02425b, #05304a, #062037, #040e25);
+  /* background-image: linear-gradient(to right bottom, #00e9ff, #00d1e6, #00b9ce, #01a2b6, #028c9e, #00798e, #00677d, #00556c, #02425b, #05304a, #062037, #040e25); */
+  background: rgb(3,11,91);
+  background: linear-gradient(-45deg, rgba(3,11,91,1) 0%, rgba(3,4,18,1) 100%);
 
 }
 

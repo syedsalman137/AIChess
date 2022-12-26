@@ -5,9 +5,9 @@
     justify-content: baseline;
     width: 24vw;
     height: 480px;
-    background-color: rgba(8, 8, 41, 0.2);
+    background-color: rgba(8, 8, 41, 0.7);
     box-sizing: border-box;
-    border: 5px solid darkblue;
+    border: 5px solid #00ff00;
     border-radius: 10px;
     color: #00FF00;
 }
@@ -20,7 +20,7 @@
     width: 24vw;
     height: 80px;
     box-sizing: border-box;
-    border: 3px solid darkblue;
+    border: 3px solid #00ff00;
 }
 
 .copy-button {
@@ -34,8 +34,8 @@
   }
   
 .copy-button:hover {
-    background-color: rgba(0, 0, 0);
-    color: white;
+    background-color: rgba(255, 255, 255);
+    color: black;
 }
 
 .pgn-holder {
@@ -48,7 +48,7 @@
     line-height: 35px;
     align-content: flex-start;
     box-sizing: border-box;
-    border: 3px solid darkblue;
+    border: 3px solid #00ff00;
     scroll-behavior: smooth;
     overflow-x: hidden;
     overflow-y: auto;
