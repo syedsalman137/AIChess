@@ -97,10 +97,9 @@ export const evalRepo =  {
 
 export default evalRepo;
 
-// P = 100
-// N = 320
-// B = 330
-// R = 500
-// Q = 900
-// K = 20000
-
+export const P = 100;
+export const N = 300;
+export const B = 300;
+export const R = 500;
+export const Q = 900;
+export const K = 9000;

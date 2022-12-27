@@ -4,7 +4,7 @@ import Tile from '../tiles/tile';
 import Banner from '../banner/banner';
 import FrameStick from '../frame/frame';
 import './arena.css';
-import * as evals from './eval-matrices';
+import * as constants from './constants';
 import Console from '../console/console';
 
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
@@ -55,7 +55,6 @@ function Arena() {
         let newMessage = "None";
         if (chess.isCheckmate()) {
             newMessage = "CHECKMATE";
-            console.log(chess.turn())
         }
         else if (chess.isStalemate()) {
             newMessage = "STALEMATE";
@@ -89,7 +88,7 @@ function Arena() {
     }
 
     function getPieceValue(posObj, x, y) {
-        let posVal = evals.evalRepo[posObj.color][posObj.type][x][y];
+        let posVal = constants.evalRepo[posObj.color][posObj.type][x][y];
         return posVal;
     }
 
@@ -102,7 +101,6 @@ function Arena() {
             let newGameMove = newGameMoves[i]
             chess.move(newGameMove);
             let value = await minimax(depth - 1, -100000, 100000, !isMaximisingPlayer);
-            console.log(value)
             chess.undo();
             if (value === null) {
                 break;
@@ -165,9 +163,27 @@ function Arena() {
             if (chess.isThreefoldRepetition()) {
                 chess.undo();
                 bestMove = chess.moves()[Math.floor(Math.random()*chess.moves().length)];
+                console.log("Random Move 1")
             }
             else {
-                chess.undo();
+                let isThreefoldMove = false;
+                for ( let i = 0; i < chess.moves().length; i++) {
+                    chess.move(chess.moves()[i]);
+                    if (chess.isThreefoldRepetition()) {
+                        chess.undo();
+                        chess.undo();
+                        isThreefoldMove = true;
+                        console.log("Random Move 2")
+                        bestMove = chess.moves()[Math.floor(Math.random()*chess.moves().length)];
+                        break;
+                    }
+                    else {
+                        chess.undo();
+                    }
+                }
+                if (!isThreefoldMove) {
+                    chess.undo();
+                }
             }
         }
 
@@ -190,22 +206,22 @@ function Arena() {
         }
         function getAbsoluteValue(piece, isWhite, x ,y) {
             if (piece.type === 'p') {
-                return 100 + ( isWhite ? evals.pawnEvalWhite[y][x] : evals.pawnEvalBlack[y][x] );
+                return constants.P + ( isWhite ? constants.pawnEvalWhite[y][x] : constants.pawnEvalBlack[y][x] );
             }
             else if (piece.type === 'r') {
-                return 500 + ( isWhite ? evals.rookEvalWhite[y][x] : evals.rookEvalBlack[y][x] );
+                return constants.R + ( isWhite ? constants.rookEvalWhite[y][x] : constants.rookEvalBlack[y][x] );
             }
             else if (piece.type === 'n') {
-                return 300 + evals.knightEvalNeutral[y][x];
+                return constants.N + constants.knightEvalNeutral[y][x];
             }
             else if (piece.type === 'b') {
-                return 300 + ( isWhite ? evals.bishopEvalWhite[y][x] : evals.bishopEvalBlack[y][x] );
+                return constants.B + ( isWhite ? constants.bishopEvalWhite[y][x] : constants.bishopEvalBlack[y][x] );
             }
             else if (piece.type === 'q') {
-                return 900 + evals.queenEvalNeutral[y][x];
+                return constants.Q + constants.queenEvalNeutral[y][x];
             }
             else if (piece.type === 'k') {
-                return 9000 + ( isWhite ? evals.kingEvalWhite[y][x] : evals.kingEvalBlack[y][x] );
+                return constants.K + ( isWhite ? constants.kingEvalWhite[y][x] : constants.kingEvalBlack[y][x] );
             }
         }
     
@@ -216,7 +232,6 @@ function Arena() {
     async function playModelMove() {
         if (chess.turn() === 'b') {
             // let compMove = chess.moves()[Math.floor(Math.random()*chess.moves().length)];
-            console.log('Started')
             let compMove = await getBestMove();
             if (compMove === undefined) {
                 compMove = chess.moves()[Math.floor(Math.random()*chess.moves().length)];
@@ -227,7 +242,6 @@ function Arena() {
             //     move = chess.move(move);
             // }
             try {
-                console.log(move)
                 move = [move['from'], move['to']];
                 highlightByIds(move);
             }
@@ -254,7 +268,6 @@ function Arena() {
     async function pushPieces(element, promoPiece=null) {
         
         let movePlayed = false;
-        console.log(chess.pgn())
         if (!chess.isGameOver()) {
             if (promoPiece === null) {
                 movePlayed = chess.move({from: selectedPiece.id, to: element.id});
@@ -384,8 +397,6 @@ function Arena() {
             board.push(<div className="board game-over"><h2>{endStatement}</h2><a className="redirect-link" href="/">Main page</a></div>)
         }
 
-        
-        // console.log(chess.board())
         return (board)
     }
     // let gameView = <div id="GameView"><Chessboard /></div>;
