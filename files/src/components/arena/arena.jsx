@@ -1,3 +1,26 @@
+// // @license
+
+// // This program hosts a chess engine.
+
+// // Copyright (C) 2023  Syed Salman Habeeb Quadri
+
+// // This program is free software: you can redistribute it and/or modify
+// // it under the terms of the GNU General Public License as published by
+// // the Free Software Foundation, either version 3 of the License, or
+// // (at your option) any later version.
+
+// // This program is distributed in the hope that it will be useful,
+// // but WITHOUT ANY WARRANTY; without even the implied warranty of
+// // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// // GNU General Public License for more details.
+
+// // The GNU General Public License does not permit incorporating this program
+// // into proprietary programs.
+
+// // You should have received a copy of the GNU General Public License
+// // along with this program.  
+// // If not, see [GNU General Public License](https://www.gnu.org/licenses/).
+
 import React, { useState } from 'react';
 import { Chess } from 'chess.js';
 import Tile from '../tiles/tile';
@@ -6,6 +29,7 @@ import FrameStick from '../frame/frame';
 import './arena.css';
 import * as constants from './constants';
 import Console from '../console/console';
+import { useSelector } from "react-redux";
 
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const verticalAxis = ["1", "2", "3", "4", "5", "6", "7", "8"];
@@ -17,10 +41,15 @@ var message = null;
 var promotionColor = null;
 var secondBackPiece = null;
 var promotionMove = null;
-
+const moveSound = new Audio("assets/sounds/move_sound.wav");
+const checkSound = new Audio("assets/sounds/check_sound.wav");
+const winSound = new Audio("assets/sounds/win_sound.wav");
+const loseSound = new Audio("assets/sounds/lose_sound.wav");
+const drawSound = new Audio("assets/sounds/draw_sound.wav");
 
 function Arena() {
     const [board, setBoard] = useState(new renderBoard());
+    const DEPTH = useSelector((state) => state.game.level);
 
     function refresh() {
         setBoard(new renderBoard());
@@ -48,6 +77,26 @@ function Arena() {
                     document.getElementById(pos).style.border = 'none';
                 } 
             }   
+        }
+    }
+
+    async function playSound() {
+        if (chess.isCheckmate()) {
+            if (chess.turn() === 'b') {
+                await winSound.play();
+            }
+            else {
+                await loseSound.play();
+            }
+        }
+        else if (chess.isStalemate() | chess.isThreefoldRepetition() | chess.isDraw()) {
+            await drawSound.play();
+        }
+        else if(chess.isCheck()) {
+            await checkSound.play();
+        }
+        else{
+            await moveSound.play();
         }
     }
 
@@ -154,7 +203,7 @@ function Arena() {
     }
 
     async function getBestMove () {    
-        let depth = 3;
+        let depth = DEPTH;
     
         let bestMove = await minimaxRoot(depth, chess, true);
 
@@ -244,6 +293,7 @@ function Arena() {
             try {
                 move = [move['from'], move['to']];
                 highlightByIds(move);
+                playSound();
             }
             catch (err) {
                 console.log(err)
@@ -278,6 +328,7 @@ function Arena() {
             
             if (movePlayed !== null) {
                 movePlayed = true;
+                playSound();
             }
             await playTurn(movePlayed);
             return movePlayed;
@@ -347,6 +398,7 @@ function Arena() {
             let pieceName = str[0].charAt(2);
             promotionMove['promotion'] = pieceName;
             chess.move(promotionMove);
+            playSound();
             promotionColor = null;
             // renderMessage();
             // refresh();
