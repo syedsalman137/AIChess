@@ -41,6 +41,8 @@ var message = null;
 var promotionColor = null;
 var secondBackPiece = null;
 var promotionMove = null;
+
+var isSoundEffectAllowed = (navigator.deviceMemory >= 8);
 const moveSound = new Audio("assets/sounds/move_sound.wav");
 const checkSound = new Audio("assets/sounds/check_sound.wav");
 const winSound = new Audio("assets/sounds/win_sound.wav");
@@ -81,22 +83,24 @@ function Arena() {
     }
 
     async function playSound() {
-        if (chess.isCheckmate()) {
-            if (chess.turn() === 'b') {
-                await winSound.play();
+        if (isSoundEffectAllowed) {
+            if (chess.isCheckmate()) {
+                if (chess.turn() === 'b') {
+                    await winSound.play();
+                }
+                else {
+                    await loseSound.play();
+                }
+                }
+            else if (chess.isStalemate() | chess.isThreefoldRepetition() | chess.isDraw()) {
+                await drawSound.play();
             }
-            else {
-                await loseSound.play();
+            else if(chess.isCheck()) {
+                await checkSound.play();
             }
-        }
-        else if (chess.isStalemate() | chess.isThreefoldRepetition() | chess.isDraw()) {
-            await drawSound.play();
-        }
-        else if(chess.isCheck()) {
-            await checkSound.play();
-        }
-        else{
-            await moveSound.play();
+            else{
+                await moveSound.play();
+            }
         }
     }
 
