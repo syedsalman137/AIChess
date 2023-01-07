@@ -67,6 +67,9 @@ If not, see [GNU General Public License](https://www.gnu.org/licenses/). */
     text-indent: 80px;
     color: aliceblue;
     word-spacing: 40px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .info {
@@ -76,6 +79,9 @@ If not, see [GNU General Public License](https://www.gnu.org/licenses/). */
   text-indent: 80px;
   word-spacing: 11px;
   color: gray;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .bgimage {
     width: 40vw;
